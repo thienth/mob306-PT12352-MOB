@@ -4,21 +4,17 @@ import { YellowBox,
           Text, 
           View } from 'react-native';
 
-export default class Login extends React.Component {
+export default class ListPost extends React.Component {
   constructor(props) {
     super(props);
     
   }
 
-  static navigationOptions = {
-    title: 'Login page',
-  };
-
   render() {
     return (
         <View style={{marginTop: 100}}>
           
-          <Text>Login page</Text>
+          <Text>List item page</Text>
           
         </View>
     );
