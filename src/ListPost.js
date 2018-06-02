@@ -5,6 +5,7 @@ import { YellowBox,
           View,
           ScrollView,
           Image, 
+          TouchableOpacity,
           ActivityIndicator } from 'react-native';
 import firebase from './fb';
 
@@ -16,8 +17,11 @@ export default class ListPost extends React.Component {
       posts: [],
       loading: true,
     };
-    
+    this._pressItem = this._pressItem.bind(this);
   }
+  static navigationOptions = {
+    title: 'Homepage',
+  };
 
   componentDidMount() {
     var postRef = firebase.database().ref('posts');
@@ -34,6 +38,10 @@ export default class ListPost extends React.Component {
     });
   }
 
+  _pressItem(post){
+    this.props.navigation.navigate('DetailPost', {post});
+  }
+
   render() {
     if(this.state.loading){
       return (
@@ -46,8 +54,10 @@ export default class ListPost extends React.Component {
         <ScrollView>
           {this.state.posts.map(
             (row) =>  <View key={row.key} style={styles.item}>
-                        <Image source={{uri: row.image}} style={styles.itemImg} />
-                        <Text style={styles.itemTitle}>{row.title}</Text>
+                        <TouchableOpacity onPress={() => this._pressItem(row)}>
+                          <Image source={{uri: row.image}} style={styles.itemImg} />
+                          <Text style={styles.itemTitle}>{row.title}</Text>
+                        </TouchableOpacity>
                         <Text style={styles.shortDesc}>{row.short_desc}</Text>
                       </View>
           )}
